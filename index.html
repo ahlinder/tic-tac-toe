@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>tic-tac-toe</title>
 </head>
 <body>
-    
+    <h3 class="header">tic tac toe</h3>
+    <div class="main-container">
+        <h3 class="message">Player O's turn</h3> 
+        <div class="row">
+            <div class="box" data-index="0"></div>
+            <div class="box" data-index="1"></div>
+            <div class="box" data-index="2"></div>
+        </div>
+        <div class="row">
+            <div class="box" data-index="3"></div>
+            <div class="box" data-index="4"></div>
+            <div class="box" data-index="5"></div>
+        </div>
+        <div class="row">
+            <div class="box" data-index="6"></div>
+            <div class="box" data-index="7"></div>
+            <div class="box" data-index="8"></div>
+        </div>
+        <button class="reset">reset</button>
+    </div>
+    <div class="footer-container">
+        <footer>ahlinder</footer>  
+        <a href="https://github.com/ahlinder"><img class="gitLogo" width="25px" height="25px" src="images/github-mark.svg" alt=""></a>
+    </div>
 </body>
 </html>
