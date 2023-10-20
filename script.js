@@ -1,3 +1,4 @@
+const message = document.querySelector(".message");
 const gameBoard = (() => {
     const board = ["", "", "", "", "", "", "", "", ""];
 
@@ -15,9 +16,24 @@ const gameBoard = (() => {
         }
     }
 
+    const randomIndex = () => {
+        if (gameController.getRoundCount() > 7) {
+            message.textContent = "Draw.";
+            gameBoard.gameOver = true;
+            gameController.resetRounds();
+            return
+        }
+        while (true){
+            const rand = Math.floor(Math.random()*8)
+            if (getBox(rand) === ""){
+                return rand
+            }
+        }
+    }
+
     const gameOver = false;
 
-    return {setBox, getBox, resetBoard, gameOver}
+    return {setBox, getBox, resetBoard, randomIndex, board}
 })();
 
 const Player = (sign) => {
@@ -32,7 +48,7 @@ const Player = (sign) => {
 const interfaceController = (() => {
     const boxes = document.querySelectorAll(".box");
     const resetButton = document.querySelector(".reset");
-    const message = document.querySelector(".message");
+
     boxes.forEach((box) => {
         box.addEventListener("click", (e) => {
             if (e.target.textContent !== "" || gameBoard.gameOver) return;
@@ -43,12 +59,13 @@ const interfaceController = (() => {
             }
             else {
                 gameController.incrementRound();
-                message.textContent = `Player ${gameController.getPlayerSign()}'s turn`
-                if (gameController.getRoundCount() > 8 && !gameBoard.gameOver) {
-                    message.textContent = "Draw.";
-                    gameBoard.gameOver = true;
-                    gameController.resetRounds();
+                const computerMove = gameBoard.randomIndex();
+                gameBoard.setBox(parseInt(computerMove), gameController.getPlayerSign());
+                boxes[computerMove].textContent = gameController.getPlayerSign();
+                if (gameController.gameOver() && gameController.getRoundCount() > 2) {
+                    message.textContent = `Player ${gameController.getPlayerSign()} won!`
                 }
+                gameController.incrementRound();
             }          
         });
     });
@@ -65,6 +82,7 @@ const interfaceController = (() => {
 })();
 
 const gameController = (() => {
+
     const playerX = Player("X");
     const playerO = Player("O");
     let round = 0;
@@ -125,5 +143,6 @@ const gameController = (() => {
             }
         }
     }
-    return {getPlayer, getPlayerSign, incrementRound, gameOver, getRoundCount, resetRounds};
+
+    return {getPlayer, getPlayerSign, incrementRound, gameOver, getRoundCount, resetRounds}
 })();
